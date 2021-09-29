@@ -14,6 +14,8 @@ public interface Globales {
     public static final int ANCHO_FRAME = 1150;
     public static final int ALTO_FRAME = 500;
     public static final int DESPLAZO_CARRO = 10;
+    
+    public final String CAR_MUSIC = "C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\music\\race.wav";
        
     public final String CAR_IMG = 
             "C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\Car.png"; 

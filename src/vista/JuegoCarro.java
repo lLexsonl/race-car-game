@@ -18,6 +18,15 @@ import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -32,6 +41,7 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
     private Image backGroundImage = null;
     private Graphics graficos;
     private int delay=200, score = 0, speed=10;
+    private Clip clip;
 
     public Carro carro;
     public TraficoCarros traficoCarros;
@@ -40,6 +50,7 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
     CarroContra carroContra;
 
     public JuegoCarro() {
+        this.startMusic();
         this.iniciar();
         this.addKeyListener(this);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -61,11 +72,39 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
         paint(graficos);
         arrancarCarro();
     }
+    
+    public void startMusic() {
+        try {
+            // create AudioInputStream object
+            AudioInputStream song
+                    = AudioSystem.getAudioInputStream(new File(CAR_MUSIC).getAbsoluteFile());
+
+            // create clip reference
+            clip = AudioSystem.getClip();
+
+            // open audioInputStream to the clip
+            clip.open(song);
+
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            
+            // volume control
+            FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            volume.setValue(-25.0f);
+            
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void arrancarCarro() {
         if (!hilo.isAlive()) {
             hilo.start();
         }
+    }
+    
+    public void restart() {
+        delay=200; score=0; speed=10;
+        iniciar();
     }
 
     public void moverCarrosContrarios(int speed) {
@@ -164,6 +203,9 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
                         carretera.setFinlinea(30);
                     }
                     moverCarrosContrarios(speed);
+                    if (carro.isImpacto()) {
+                        restart();
+                    }
                 }
             } catch (java.lang.InterruptedException ie) {
                 System.out.println(ie.getMessage());

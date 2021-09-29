@@ -41,6 +41,14 @@ public class Carro implements Globales {
         this.posy = posy;
     }
 
+    public boolean isImpacto() {
+        return impacto;
+    }
+
+    public void setImpacto(boolean impacto) {
+        this.impacto = impacto;
+    }
+
     public void dibujarCarro(Graphics g) {
         this.imgCarro = new javax.swing.ImageIcon(CAR_IMG).getImage();
         g.drawImage(this.imgCarro, this.posx, this.posy, null);
@@ -48,7 +56,7 @@ public class Carro implements Globales {
     
     public boolean verificarChoke(int x, int y){
               
-          if( x==getPosx() && (getPosy()>24 && getPosy() < 86) && ( y<=54) ) {
+          if( (x-getPosx() <= 0 || getPosx()-x >= 0 ) && Math.abs(y-getPosy()) < 30) {
               JOptionPane.showMessageDialog(null, "Impactado");
               this.impacto = true;
           }

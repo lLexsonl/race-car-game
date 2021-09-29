@@ -72,14 +72,16 @@ public class TraficoCarros implements Globales {
             carroCont.setPosx(carroCont.getPosx() - speed);
             xpo = carroCont.getPosx();
             ypo = carroCont.getPosy();
-            System.out.println("Carro x" +carro.getPosx() + " y " + carro.getPosy() + "     trafico x"+xpo+"   trafio y "+ypo);
+            //System.out.println("Carro x" +carro.getPosx() + " y " + carro.getPosy() + "     trafico x"+xpo+"   trafio y "+ypo);
             if (this.carro.verificarChoke(xpo, ypo)) {
-                System.out.println("choque");
+//                System.out.println("choque");
+                return;
             }
             i++;
         }
-        if(xpo < -100)
+        if(xpo < -100) {
             this.cargarListaCarrosContra();
+        }
     }
 
     public int retornarNcarro() {
