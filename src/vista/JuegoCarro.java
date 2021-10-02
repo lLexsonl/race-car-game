@@ -9,11 +9,11 @@ import control.Carro;
 import control.Carretera;
 import control.CarroContra;
 import control.Globales;
+import control.Info;
 import control.TraficoCarros;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Font;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -38,15 +38,15 @@ import javax.swing.JFrame;
 public class JuegoCarro extends JFrame implements Globales, KeyListener {
 
     private BufferedImage imgBuffered;
-    private Image backGroundImage = null;
+    private Image backGroundImage = new ImageIcon(FONDOS_IMG[0]).getImage();
     private Graphics graficos;
-    private int delay=200, score = 0, speed=10;
+    //private int score = 0, speed=1, lifes=3;
     private Clip clip;
 
     public Carro carro;
     public TraficoCarros traficoCarros;
     Carretera carretera = new Carretera(this);
-    int contadorContra;
+    Info info = new Info(this);
     CarroContra carroContra;
 
     public JuegoCarro() {
@@ -54,7 +54,6 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
         this.iniciar();
         this.addKeyListener(this);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        contadorContra = 0;
     }
 
     public void iniciar() {
@@ -65,6 +64,7 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
         carroContra = new CarroContra();
         traficoCarros = new TraficoCarros(carro);
         carretera = new Carretera(this);
+	info = new Info(this);
         this.setBackground(Color.black);
         this.setSize(ANCHO_FRAME, ALTO_FRAME);
         this.setLocationRelativeTo(this);
@@ -92,7 +92,6 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
             volume.setValue(-25.0f);
             
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
         }
     }
 
@@ -103,7 +102,7 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
     }
     
     public void restart() {
-        delay=200; score=0; speed=10;
+        info.setScore(0); info.setSpeed(1);
         iniciar();
     }
 
@@ -111,39 +110,26 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
         traficoCarros.moverTrafico(speed);
     }
     
-    
+    @Override
     public void paint(Graphics g) {
         graficos.setColor(Color.black);
         graficos.fillRect(0, 0, ANCHO_FRAME, ALTO_FRAME);
+	
+	int score = info.getScore();
+      
+        if (score % 1000 == 0 && score <= 2000) {
+            backGroundImage = new ImageIcon(FONDOS_IMG[score / 1000]).getImage();
+        }
         
-        if(score <= 50) {
-            backGroundImage = new ImageIcon(FONDOS_IMG[0]).getImage();
-        }
-        else if(score > 50 && score < 100) {
-            backGroundImage = new ImageIcon(FONDOS_IMG[1]).getImage();
-        } else {
-            backGroundImage = new ImageIcon(FONDOS_IMG[2]).getImage();
-        }
         graficos.drawImage(backGroundImage, 0, 0, this);
         carretera.dibujarCarretera(graficos);
         carretera.dibujarLineaSMedia(graficos);
+	info.dibujarInfo(graficos);
         carro.dibujarCarro(graficos);
         traficoCarros.dibujarTafico(graficos);
         g.drawImage(imgBuffered, 0, 0, this);
         
-        g.setColor(Color.gray);
-        g.fillRect(120,35,220,50);
-        g.setColor(Color.DARK_GRAY);
-        g.fillRect(125,40, 210, 40);
-        g.setColor(Color.gray);
-        g.fillRect(385,35,180,50);
-        g.setColor(Color.DARK_GRAY);
-        g.fillRect(390,40, 170, 40);
-        g.setColor(Color.white);
-        g.setFont(new Font("Arial",Font.BOLD,30));
-        g.drawString("Score : " + score, 130, 67);
-        g.drawString(speed + " Km/h", 400, 67);
-        score++;
+        info.dibujarInfo(g);
     }
     
     @Override
@@ -186,13 +172,14 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
                     if (carro.getPosx() < 0) {
                          carro.setPosx(10);
                     }
+		    
                     repaint();
+                    info.addScore(1);
 
-                    hilo.sleep(100);
-                    if (delay >= 1) {
-                        if (score % 10 == 0) {
-                            delay -= 5;
-                            speed += 5;
+                    hilo.sleep(10);
+                     if (info.getScore() % 100 == 0) {
+                        if (info.getSpeed() < 30) {
+                            info.addSpeed(1);
                         }
                     }
                     carretera.setInicioLinea(carretera.getFinlinea() + 15);
@@ -202,7 +189,8 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
                         carretera.setInicioLinea(0);
                         carretera.setFinlinea(30);
                     }
-                    moverCarrosContrarios(speed);
+                    moverCarrosContrarios(info.getSpeed());
+                    
                     if (carro.isImpacto()) {
                         restart();
                     }
@@ -214,7 +202,7 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
     };
 
     public static void main(String[] args) {
-        JuegoCarro ja = new JuegoCarro();
+        new JuegoCarro();
     }
 
 }

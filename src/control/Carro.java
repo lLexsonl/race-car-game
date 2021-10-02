@@ -8,12 +8,13 @@ package control;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 
 /**
  *
  * @author hugo
  */
-public class Carro implements Globales {
+public class Carro extends JLabel implements Globales {
 
     private int posx;
     private int posy;
@@ -54,12 +55,11 @@ public class Carro implements Globales {
         g.drawImage(this.imgCarro, this.posx, this.posy, null);
     }
     
-    public boolean verificarChoke(int x, int y){
-              
-          if( (x-getPosx() <= 0 || getPosx()-x >= 0 ) && Math.abs(y-getPosy()) < 30) {
-              JOptionPane.showMessageDialog(null, "Impactado");
-              this.impacto = true;
-          }
-       return  impacto;
+    public boolean verificarChoke(int x, int y) {
+        if (Math.abs(x - getPosx()) < 10 && Math.abs(y - getPosy()) < 30) {
+            JOptionPane.showMessageDialog(null, "Impactado");
+            this.impacto = true;
+        }
+        return impacto;
     }
 }
