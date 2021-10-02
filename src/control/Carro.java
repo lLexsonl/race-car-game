@@ -56,7 +56,7 @@ public class Carro extends JLabel implements Globales {
     }
     
     public boolean verificarChoke(int x, int y) {
-        if (Math.abs(x - getPosx()) < 10 && Math.abs(y - getPosy()) < 30) {
+        if (Math.abs(x - posx) < 30 && Math.abs(y - posy) < 30) {
             JOptionPane.showMessageDialog(null, "Impactado");
             this.impacto = true;
         }

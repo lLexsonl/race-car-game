@@ -16,38 +16,23 @@ import vista.JuegoCarro;
  *
  * @author yerso
  */
-public class Info implements Globales, Runnable {
-    private int speed = 0;
-    private int score = 1;
-    public Thread thread;
-    private JuegoCarro juegoCarro;
-    
-    public Info(JuegoCarro ja) {
-	this.juegoCarro = ja;
-	thread = new Thread(this);
-        thread.start();
-    }
-
-    @Override
-    public void run() {
-	try {
-            Thread.sleep(10);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Carretera.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+public class Info implements Globales {
+    private int speed = 1;
+    private int score = 0;
     
     public void dibujarInfo(Graphics g) {
 	g.setColor(Color.gray);
-        g.fillRect(120,35,220,50);
+        g.fillRect(120, 35, 190, 50);
         g.setColor(Color.DARK_GRAY);
-        g.fillRect(125,40, 210, 40);
+        g.fillRect(125, 40, 180, 40);
+	
         g.setColor(Color.gray);
-        g.fillRect(385,35,180,50);
+        g.fillRect(385, 35, 160,50);
         g.setColor(Color.DARK_GRAY);
-        g.fillRect(390,40, 170, 40);
+        g.fillRect(390,40, 150, 40);
+	
         g.setColor(Color.white);
-        g.setFont(new Font("Arial",Font.BOLD,30));
+        g.setFont(new Font("Arial",Font.BOLD, 30));
         g.drawString("Score : " + score, 130, 67);
         g.drawString(speed * 10 + " Km/h", 400, 67);
     }

@@ -10,6 +10,7 @@ import control.Carretera;
 import control.CarroContra;
 import control.Globales;
 import control.Info;
+import control.InfoVidas;
 import control.TraficoCarros;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -46,7 +47,8 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
     public Carro carro;
     public TraficoCarros traficoCarros;
     Carretera carretera = new Carretera(this);
-    Info info = new Info(this);
+    Info info = new Info();
+    InfoVidas vidas = new InfoVidas();
     CarroContra carroContra;
 
     public JuegoCarro() {
@@ -64,7 +66,8 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
         carroContra = new CarroContra();
         traficoCarros = new TraficoCarros(carro);
         carretera = new Carretera(this);
-	info = new Info(this);
+	info = new Info();
+	vidas.dibujarVidas(graficos);
         this.setBackground(Color.black);
         this.setSize(ANCHO_FRAME, ALTO_FRAME);
         this.setLocationRelativeTo(this);
@@ -102,7 +105,10 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
     }
     
     public void restart() {
-        info.setScore(0); info.setSpeed(1);
+        info.setScore(0); info.setSpeed(1); vidas.die();
+	if(vidas.getVidas() <= 0) {
+	    System.exit(0);
+	}
         iniciar();
     }
 
@@ -125,11 +131,10 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
         carretera.dibujarCarretera(graficos);
         carretera.dibujarLineaSMedia(graficos);
 	info.dibujarInfo(graficos);
+	vidas.dibujarVidas(graficos);
         carro.dibujarCarro(graficos);
         traficoCarros.dibujarTafico(graficos);
         g.drawImage(imgBuffered, 0, 0, this);
-        
-        info.dibujarInfo(g);
     }
     
     @Override
