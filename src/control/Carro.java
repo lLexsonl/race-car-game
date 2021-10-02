@@ -7,7 +7,6 @@ package control;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 
 /**
@@ -51,13 +50,17 @@ public class Carro extends JLabel implements Globales {
     }
 
     public void dibujarCarro(Graphics g) {
-        this.imgCarro = new javax.swing.ImageIcon(CAR_IMG).getImage();
-        g.drawImage(this.imgCarro, this.posx, this.posy, null);
+	if (!this.impacto) {
+	    this.imgCarro = new javax.swing.ImageIcon(CAR_IMG).getImage();
+	}
+	else {
+	    this.imgCarro = new javax.swing.ImageIcon(EXP_IMG).getImage();
+	}
+	g.drawImage(this.imgCarro, this.posx, this.posy, null);
     }
     
     public boolean verificarChoke(int x, int y) {
-        if (Math.abs(x - posx) < 30 && Math.abs(y - posy) < 30) {
-            JOptionPane.showMessageDialog(null, "Impactado");
+        if ((Math.abs(x - posx) < 30 && Math.abs(y - posy) < 30) || (posx < 0 || posx > 1150 || posy < 30 || posy > 400)) {
             this.impacto = true;
         }
         return impacto;

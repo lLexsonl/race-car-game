@@ -31,6 +31,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -52,91 +53,94 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
     CarroContra carroContra;
 
     public JuegoCarro() {
-        this.startMusic();
-        this.iniciar();
-        this.addKeyListener(this);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	this.startMusic();
+	this.iniciar();
+	this.addKeyListener(this);
+	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public void iniciar() {
-        imgBuffered = new BufferedImage(ANCHO_FRAME, ALTO_FRAME,
-                BufferedImage.TYPE_INT_RGB);
-        graficos = imgBuffered.createGraphics();
-        carro = new Carro();
-        carroContra = new CarroContra();
-        traficoCarros = new TraficoCarros(carro);
-        carretera = new Carretera(this);
+	imgBuffered = new BufferedImage(ANCHO_FRAME, ALTO_FRAME,
+		BufferedImage.TYPE_INT_RGB);
+	graficos = imgBuffered.createGraphics();
+	carro = new Carro();
+	carroContra = new CarroContra();
+	traficoCarros = new TraficoCarros(carro);
+	carretera = new Carretera(this);
 	info = new Info();
 	vidas.dibujarVidas(graficos);
-        this.setBackground(Color.black);
-        this.setSize(ANCHO_FRAME, ALTO_FRAME);
-        this.setLocationRelativeTo(this);
-        this.setVisible(true);
-        paint(graficos);
-        arrancarCarro();
+	this.setBackground(Color.black);
+	this.setSize(ANCHO_FRAME, ALTO_FRAME);
+	this.setLocationRelativeTo(this);
+	this.setVisible(true);
+	paint(graficos);
+	arrancarCarro();
     }
-    
+
     public void startMusic() {
-        try {
-            // create AudioInputStream object
-            AudioInputStream song
-                    = AudioSystem.getAudioInputStream(new File(CAR_MUSIC).getAbsoluteFile());
+	try {
+	    // create AudioInputStream object
+	    AudioInputStream song
+		    = AudioSystem.getAudioInputStream(new File(CAR_MUSIC).getAbsoluteFile());
 
-            // create clip reference
-            clip = AudioSystem.getClip();
+	    // create clip reference
+	    clip = AudioSystem.getClip();
 
-            // open audioInputStream to the clip
-            clip.open(song);
+	    // open audioInputStream to the clip
+	    clip.open(song);
 
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-            
-            // volume control
-            FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            volume.setValue(-25.0f);
-            
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-        }
+	    clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+	    // volume control
+	    FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+	    volume.setValue(-25.0f);
+
+	} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+	}
     }
 
     public void arrancarCarro() {
-        if (!hilo.isAlive()) {
-            hilo.start();
-        }
+	if (!hilo.isAlive()) {
+	    hilo.start();
+	}
     }
-    
+
     public void restart() {
-        info.setScore(0); info.setSpeed(1); vidas.die();
-	if(vidas.getVidas() <= 0) {
+	info.setScore(0);
+	info.setSpeed(1);
+	vidas.die();
+	if (vidas.getVidas() <= 0) {
 	    System.exit(0);
 	}
-        iniciar();
+	iniciar();
     }
 
     public void moverCarrosContrarios(int speed) {
-        traficoCarros.moverTrafico(speed);
+	traficoCarros.moverTrafico(speed);
     }
-    
+
     @Override
     public void paint(Graphics g) {
-        graficos.setColor(Color.black);
-        graficos.fillRect(0, 0, ANCHO_FRAME, ALTO_FRAME);
-	
+	graficos.setColor(Color.black);
+	graficos.fillRect(0, 0, ANCHO_FRAME, ALTO_FRAME);
+
 	int score = info.getScore();
-      
-        if (score % 1000 == 0 && score <= 2000) {
-            backGroundImage = new ImageIcon(FONDOS_IMG[score / 1000]).getImage();
-        }
-        
-        graficos.drawImage(backGroundImage, 0, 0, this);
-        carretera.dibujarCarretera(graficos);
-        carretera.dibujarLineaSMedia(graficos);
+	int speed = info.getSpeed();
+
+	if (score % 1000 == 0 && score <= 2000) {
+	    backGroundImage = new ImageIcon(FONDOS_IMG[score / 1000]).getImage();
+	}
+
+	graficos.drawImage(backGroundImage, 0, 0, this);
+	carretera.dibujarCarretera(graficos);
+	carretera.dibujarLineaSMedia(graficos);
 	info.dibujarInfo(graficos);
 	vidas.dibujarVidas(graficos);
-        carro.dibujarCarro(graficos);
-        traficoCarros.dibujarTafico(graficos);
-        g.drawImage(imgBuffered, 0, 0, this);
+	carro.dibujarCarro(graficos);
+	traficoCarros.dibujarTafico(graficos);
+	g.drawImage(imgBuffered, 0, 0, this);
     }
-    
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -145,20 +149,20 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
 
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            carro.setPosx(carro.getPosx() + DESPLAZO_CARRO);
-        }
+	if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+	    carro.setPosx(carro.getPosx() + DESPLAZO_CARRO);
+	}
 
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            carro.setPosx(carro.getPosx() - DESPLAZO_CARRO);
-        }
+	if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+	    carro.setPosx(carro.getPosx() - DESPLAZO_CARRO);
+	}
 
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            carro.setPosy(carro.getPosy() - DESPLAZO_CARRO);
-        }
-        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            carro.setPosy(carro.getPosy() + DESPLAZO_CARRO);
-        }
+	if (e.getKeyCode() == KeyEvent.VK_UP) {
+	    carro.setPosy(carro.getPosy() - DESPLAZO_CARRO);
+	}
+	if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+	    carro.setPosy(carro.getPosy() + DESPLAZO_CARRO);
+	}
     }
 
     @Override
@@ -166,48 +170,50 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
     }
 
     private Thread hilo = new Thread() {
-        @Override
-        public void run() {
-            try {
-                while (true) {
+	@Override
+	public void run() {
+	    try {
+		while (true) {
 
-                    if (carro.getPosx() >= ANCHO_FRAME) {
-                        carro.setPosx(ANCHO_FRAME-80);
-                    }
-                    if (carro.getPosx() < 0) {
-                         carro.setPosx(10);
-                    }
-		    
-                    repaint();
-                    info.addScore(1);
+		    if (carro.getPosx() >= ANCHO_FRAME) {
+			carro.setPosx(ANCHO_FRAME - 80);
+		    }
+		    if (carro.getPosx() < 0) {
+			carro.setPosx(10);
+		    }
 
-                    hilo.sleep(10);
-                     if (info.getScore() % 100 == 0) {
-                        if (info.getSpeed() < 30) {
-                            info.addSpeed(1);
-                        }
-                    }
-                    carretera.setInicioLinea(carretera.getFinlinea() + 15);
-                    carretera.setFinlinea(carretera.getFinlinea() + 30);
-                
-                    if (carretera.getFinlinea() >= ANCHO_FRAME) {
-                        carretera.setInicioLinea(0);
-                        carretera.setFinlinea(30);
-                    }
-                    moverCarrosContrarios(info.getSpeed());
-                    
-                    if (carro.isImpacto()) {
-                        restart();
-                    }
-                }
-            } catch (java.lang.InterruptedException ie) {
-                System.out.println(ie.getMessage());
-            }
-        }
+		    repaint();
+		    info.addScore(1);
+
+		    hilo.sleep(10);
+		    if (info.getScore() % 100 == 0) {
+			if (info.getSpeed() < 30) {
+			    info.addSpeed(1);
+			}
+		    }
+		    carretera.setInicioLinea(carretera.getFinlinea() + 15);
+		    carretera.setFinlinea(carretera.getFinlinea() + 30);
+
+		    if (carretera.getFinlinea() >= ANCHO_FRAME) {
+			carretera.setInicioLinea(0);
+			carretera.setFinlinea(30);
+		    }
+		    moverCarrosContrarios(info.getSpeed());
+
+		    if (carro.isImpacto()) {
+			repaint();
+			JOptionPane.showMessageDialog(null, "Impactado");
+			restart();
+		    }
+		}
+	    } catch (java.lang.InterruptedException ie) {
+		System.out.println(ie.getMessage());
+	    }
+	}
     };
 
     public static void main(String[] args) {
-        new JuegoCarro();
+	new JuegoCarro();
     }
 
 }

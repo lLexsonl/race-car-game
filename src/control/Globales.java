@@ -19,8 +19,9 @@ public interface Globales {
        
     public final String CAR_IMG = 
             "C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\Car.png"; 
-   
     
+    public final String EXP_IMG = 
+            "C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\explosion.png";
     public static final String [] CAARROS_CONTRA ={        
         "C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\Car1.png",
         "C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\Taxi.png",
