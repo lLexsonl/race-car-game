@@ -16,9 +16,10 @@ public interface Globales {
     public static final int DESPLAZO_CARRO = 10;
     
     public final String CAR_MUSIC = "C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\music\\race.wav";
+    public final String CRASH_MUSIC = "C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\music\\crash.wav";
        
     public final String CAR_IMG = 
-            "C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\Car.png"; 
+            "C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\Car.png";
     
     public final String EXP_IMG = 
             "C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\explosion.png";

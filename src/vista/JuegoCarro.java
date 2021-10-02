@@ -98,6 +98,28 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
 	} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 	}
     }
+    
+    public void startMusicChoque() {
+	try {
+	    // create AudioInputStream object
+	    AudioInputStream song
+		    = AudioSystem.getAudioInputStream(new File(CRASH_MUSIC).getAbsoluteFile());
+
+	    // create clip reference
+	    Clip crash = AudioSystem.getClip();
+
+	    // open audioInputStream to the clip
+	    crash.open(song);
+
+	    crash.loop(0);
+
+	    // volume control
+	    FloatControl volume = (FloatControl) crash.getControl(FloatControl.Type.MASTER_GAIN);
+	    volume.setValue(-20.0f);
+
+	} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+	}
+    }
 
     public void arrancarCarro() {
 	if (!hilo.isAlive()) {
@@ -202,6 +224,7 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
 
 		    if (carro.isImpacto()) {
 			repaint();
+			startMusicChoque();
 			JOptionPane.showMessageDialog(null, "Impactado");
 			restart();
 		    }
