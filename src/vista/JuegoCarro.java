@@ -132,7 +132,12 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
 	info.setSpeed(1);
 	vidas.die();
 	if (vidas.getVidas() <= 0) {
-	    System.exit(0);
+	    int input = JOptionPane.showConfirmDialog(null, 
+                "Deseas continuar jugando?", "Confirmar Salida...", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+	    if (input == 1) {
+		System.exit(0);
+	    }
+	    vidas = new InfoVidas();
 	}
 	iniciar();
     }

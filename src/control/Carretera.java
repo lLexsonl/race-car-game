@@ -80,7 +80,7 @@ public class Carretera implements Globales, Runnable {
     public void dibujarCarretera(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(3.0f));
-        g2.setPaint(Color.yellow);
+        g2.setPaint(Color.WHITE);
         g2.drawLine(0, 50, ANCHO_FRAME, 50);
         g2.drawLine(0, 450, ANCHO_FRAME, 450);
     }
