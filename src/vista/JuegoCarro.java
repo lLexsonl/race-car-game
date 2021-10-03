@@ -42,8 +42,8 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
     private BufferedImage imgBuffered;
     private Image backGroundImage = new ImageIcon(FONDOS_IMG[0]).getImage();
     private Graphics graficos;
-    //private int score = 0, speed=1, lifes=3;
     private Clip clip;
+    private boolean win;
 
     public Carro carro;
     public TraficoCarros traficoCarros;
@@ -60,6 +60,7 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
     }
 
     public void iniciar() {
+	win = false;
 	imgBuffered = new BufferedImage(ANCHO_FRAME, ALTO_FRAME,
 		BufferedImage.TYPE_INT_RGB);
 	graficos = imgBuffered.createGraphics();
@@ -126,14 +127,18 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
 	    hilo.start();
 	}
     }
+    
+    public int confirmDialog() {
+	return JOptionPane.showConfirmDialog(null, 
+                "Deseas continuar jugando?", "Confirmar Salida...", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+    }
 
     public void restart() {
 	info.setScore(0);
 	info.setSpeed(1);
 	vidas.die();
-	if (vidas.getVidas() <= 0) {
-	    int input = JOptionPane.showConfirmDialog(null, 
-                "Deseas continuar jugando?", "Confirmar Salida...", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+	if (vidas.getVidas() <= 0 || win) {
+	    int input = confirmDialog();
 	    if (input == 1) {
 		System.exit(0);
 	    }
@@ -211,6 +216,11 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
 
 		    repaint();
 		    info.addScore(1);
+		    if (info.getScore() >= 3000) {
+			win = true;
+			JOptionPane.showMessageDialog(null, "Ganaste");
+			restart();
+		    }
 
 		    hilo.sleep(10);
 		    if (info.getScore() % 100 == 0) {
