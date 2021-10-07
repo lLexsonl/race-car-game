@@ -32,8 +32,33 @@ public interface Globales {
     
     
     
-       public static final String [] FONDOS_IMG ={        
-        "C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\fondo1.jpg",
-        "C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\fondo2.jpg",
-        "C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\fondo3.jpg"};
+    public static final String[] FONDOS_IMG = {
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\fondo1.jpg",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\fondo2.jpg",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\fondo3.jpg"};
+
+    public static final String[] DETAILS_GREEN = {
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\green1.png",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\noface2.png",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\castle.png",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\noface2.png",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\green1.png",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\green1.png",
+    };
+
+    public static final String[] DETAILS_BLACK = {
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\tree2.png",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\tree3.png",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\tree1.png",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\noface2.png",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\noface2.png",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\tree2.png",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\tree3.png",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\tree1.png",};
+
+    public static final String[] DETAILS_STAR = {
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\noface.png",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\noface2.png",
+	"C:\\Users\\yerso\\OneDrive\\Documentos\\Personal\\java\\JuegoAvion\\src\\images\\noface2.png"
+    };
 }

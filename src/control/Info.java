@@ -8,15 +8,12 @@ package control;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import vista.JuegoCarro;
 
 /**
  *
  * @author yerso
  */
-public class Info implements Globales {
+public class Info {
     private int speed = 1;
     private int score = 0;
     

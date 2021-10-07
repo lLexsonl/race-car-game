@@ -8,6 +8,7 @@ package vista;
 import control.Carro;
 import control.Carretera;
 import control.CarroContra;
+import control.Detail;
 import control.Globales;
 import control.Info;
 import control.InfoVidas;
@@ -51,6 +52,7 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
     Info info = new Info();
     InfoVidas vidas = new InfoVidas();
     CarroContra carroContra;
+    Detail detail;
 
     public JuegoCarro() {
 	this.startMusic();
@@ -69,7 +71,7 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
 	traficoCarros = new TraficoCarros(carro);
 	carretera = new Carretera(this);
 	info = new Info();
-	vidas.dibujarVidas(graficos);
+	detail = new Detail();
 	this.setBackground(Color.black);
 	this.setSize(ANCHO_FRAME, ALTO_FRAME);
 	this.setLocationRelativeTo(this);
@@ -116,7 +118,7 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
 
 	    // volume control
 	    FloatControl volume = (FloatControl) crash.getControl(FloatControl.Type.MASTER_GAIN);
-	    volume.setValue(-20.0f);
+	    volume.setValue(-10.0f);
 
 	} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 	}
@@ -157,7 +159,6 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
 	graficos.fillRect(0, 0, ANCHO_FRAME, ALTO_FRAME);
 
 	int score = info.getScore();
-	int speed = info.getSpeed();
 
 	if (score % 1000 == 0 && score <= 2000) {
 	    backGroundImage = new ImageIcon(FONDOS_IMG[score / 1000]).getImage();
@@ -167,9 +168,11 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
 	carretera.dibujarCarretera(graficos);
 	carretera.dibujarLineaSMedia(graficos);
 	info.dibujarInfo(graficos);
+	detail.dibujarDetail(graficos, score);
 	vidas.dibujarVidas(graficos);
 	carro.dibujarCarro(graficos);
 	traficoCarros.dibujarTafico(graficos);
+	
 	g.drawImage(imgBuffered, 0, 0, this);
     }
 
@@ -214,8 +217,9 @@ public class JuegoCarro extends JFrame implements Globales, KeyListener {
 			carro.setPosx(10);
 		    }
 
-		    repaint();
 		    info.addScore(1);
+		    repaint();
+		    
 		    if (info.getScore() >= 3000) {
 			win = true;
 			JOptionPane.showMessageDialog(null, "Ganaste");

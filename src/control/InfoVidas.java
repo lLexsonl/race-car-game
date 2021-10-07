@@ -8,7 +8,7 @@ import java.awt.Graphics;
  *
  * @author yerso
  */
-public class InfoVidas implements Globales {
+public class InfoVidas {
     private int lives = 2;
     
     public InfoVidas() {
